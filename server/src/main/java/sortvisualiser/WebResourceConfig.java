@@ -8,6 +8,7 @@ import jakarta.ws.rs.ApplicationPath;
 public class WebResourceConfig extends ResourceConfig {
     public WebResourceConfig() {
         packages("sortvisualiser");
+        register(CORSFilter.class);
     }
 }
 

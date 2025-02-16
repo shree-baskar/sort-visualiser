@@ -23,11 +23,11 @@ public abstract class QuickSortResource implements SortResource {
             if (nums[j] <= pivot) {
                 swap(nums, i, j);
                 i++;
-                steps.add(nums.clone());
+                if (nums[i-1] != nums[j]) steps.add(nums.clone());
             }
         }
         swap(nums, i - 1, low);
-        steps.add(nums.clone());
+        if (nums[i-1] != nums[low]) steps.add(nums.clone());
         return i - 1;
     }
 

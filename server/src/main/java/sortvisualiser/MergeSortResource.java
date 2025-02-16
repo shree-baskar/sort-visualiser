@@ -21,24 +21,35 @@ public class MergeSortResource implements SortResource {
         int mid = start + ((end - start) / 2);
         mergeSort(nums, start, mid, steps);
         mergeSort(nums, mid + 1, end, steps);
-        merge(nums, start, mid, end);
+        merge(nums, start, mid, end, steps);
         steps.add(nums.clone());
     }
 
-    private void merge(int[] nums, int start, int mid, int end) {
+    private void merge(int[] nums, int start, int mid, int end, List<int[]> steps) {
         int[] leftArr = Arrays.copyOfRange(nums, start, mid + 1);
         int[] rightArr = Arrays.copyOfRange(nums, mid + 1, end + 1);
 
         int left = 0, right = 0, curr = start;
         while (left < leftArr.length && right < rightArr.length) {
             if (leftArr[left] <= rightArr[right]) {
-                nums[curr++] = leftArr[left++];
+                copy(nums, curr++, leftArr[left++], steps);
             } else {
-                nums[curr++] = rightArr[right++];
+                copy(nums, curr++, rightArr[right++], steps);
             }
         }
 
-        while (left < leftArr.length) nums[curr++] = leftArr[left++];
-        while (right < rightArr.length) nums[curr++] = rightArr[right++];
+        while (left < leftArr.length) {
+            copy(nums, curr++, leftArr[left++], steps);
+        }
+        while (right < rightArr.length) {
+            copy(nums, curr++, rightArr[right++], steps);
+        }
+    }
+
+    private void copy(int[] nums, int index, int copyValue, List<int[]> steps) {
+        if (nums[index] != copyValue) {
+            nums[index] = copyValue;
+            steps.add(nums.clone());
+        }
     }
 }
